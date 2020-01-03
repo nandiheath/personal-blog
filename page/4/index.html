@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-33374738-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>踩坑日記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="踩坑日記">
+<meta property="og:url" content="https://blog.nandiheath.com/page/4/index.html">
+<meta property="og:site_name" content="踩坑日記">
+<meta property="og:locale" content="zh-hk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="踩坑日記">
+  
+    <link rel="alternate" href="/atom.xml" title="踩坑日記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v3.1&appId=263598971027823&autoLogAppEvents=1&colorscheme=dark&order_by=time";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">踩坑日記</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首頁</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/cheatsheets">Cheatsheets</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.nandiheath.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  <!-- Hide the post of some categories -->
+  
+    <article id="post-phantomjs-in-docker" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/12/phantomjs-in-docker/" class="article-date">
+  <time datetime="2017-12-12T01:35:50.000Z" itemprop="datePublished">2017-12-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dev/">dev</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/12/phantomjs-in-docker/">千萬不要在docker中用phantomjs來截圖</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>工作上需要一個臨時的排行榜，本來是要人手每天更新</p>
+<h4 id="但想到了一個很HACK的作法"><a href="#但想到了一個很HACK的作法" class="headerlink" title="但想到了一個很HACK的作法:"></a>但想到了一個很HACK的作法:</h4><p>運行一個webserver，利用html + css製作一個臨時的排行榜<br>之後運行phantomjs製作一張螢幕截圖，再把圖片upload上s3並更新服務器位址</p>
+<p>之前有用過phantomjs製作截圖，覺得整體上可行性甚高<br>亦因此開始了痛苦的踩坑之旅…</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/12/12/phantomjs-in-docker/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2017/12/12/phantomjs-in-docker/" data-id="ck4xswhr60032g8rtjk4pb4cj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/phantomjs/">phantomjs</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/06/docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty/" class="article-date">
+  <time datetime="2017-12-06T02:58:06.000Z" itemprop="datePublished">2017-12-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/docker/">docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/06/docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty/">Docker build 時發生&#34;rm -rf cannot remove /some/path/ .. directory not empty&#34;</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>於AWS上設定gitlab-runner CI運行時彈出了錯誤</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf cannot remove [/some/path/] .. directory not empty</span><br></pre></td></tr></table></figure>
+<p>跑一下docker info 發現是檔案系統出現衝突 (大概是沒有設定好 )</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/12/06/docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2017/12/06/docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty/" data-id="ck4xswhpz000ug8rttuf3xii2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitlab/">gitlab</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nginx-reverse-proxy" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/10/nginx-reverse-proxy/" class="article-date">
+  <time datetime="2017-11-10T08:53:17.000Z" itemprop="datePublished">2017-11-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/10/nginx-reverse-proxy/">Nginx 反向代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果有一個nodejs服務在你的機器上跑<br>並正在監聽3000端口<br>但你要把他發佈時又因為美觀問題想直接使用80端口<br>這時侯就你會用到反向代理了</p>
+<p>代理這一個概念相信也不陌生<br>例如常用的網頁代理服務就是當你要瀏覽一個網站時<br>先經過一個跳板，他會把你的請求發到該網站上收到訊息後再轉發給你<br>而反向代理也類似，只是用在服務器上而已<br>在一個機器上的反向代理收到請求後，會把該請求轉發給正在監聽中的服務<br>然後把處理完的回覆再經反向代理發給用戶</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/11/10/nginx-reverse-proxy/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2017/11/10/nginx-reverse-proxy/" data-id="ck4xswhr5002zg8rtm7b60tah" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/domain/">domain</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse-proxy/">reverse proxy</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-5" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/07/lifestorm2-revive-5/" class="article-date">
+  <time datetime="2017-01-06T23:22:00.000Z" itemprop="datePublished">2017-01-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/07/lifestorm2-revive-5/">樂園復活計劃 - 5</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其實這次已經算是第三次的挑戰<br>當年第一次是在沒有任何資料下直接找東西來開啟.bin檔<br>也試過用hex格式嘗試解碼<br>結果是很理所當然的0%</p>
+<p>第二次是看到facebook有人請到石器私服的大神來解析樂園的檔案格式<br>由於樂園是石器的近親(?)<br>大神也給出了樂園的地圖及人物瀏覽器（及最重要的源碼）<br>這對復活樂園來說簡直是一線曙光！<br>而我也能夠把樂園的所有圖像都解壓出來<br>但當嘗試用cocos2dx來加載是卻不能正常顯示<br>所以搞了半個月就放棄了</p>
+<p>而第三次的契機就是失業 XD<br>百無聊賴之下就再一次嘗試起來<br>這一次頭腦比較清淅<br>把之前碰到的難題都一一解決了<br>所以開發的所有障礙都已經清除掉<br>剩下就只缺時間了 XDDDD</p>
+<p>所以希望這次能夠慢慢一點一點的開發<br>而我的耐性也能持續到開發完成就好 (_ _)<br>努力吧!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2017/01/07/lifestorm2-revive-5/" data-id="ck4xswhr1002pg8rtwtfs8mdt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-4" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/03/lifestorm2-revive-4/" class="article-date">
+  <time datetime="2017-01-03T05:46:00.000Z" itemprop="datePublished">2017-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/03/lifestorm2-revive-4/">樂園復活計劃 - 4</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本以為顯示地圖是一件很簡單的事情… 誰不知花了快數天的時間 搞了一大輪 明明圖檔中的offset資料已經加進去 但發覺位置總是差了一點 <img src="/images/lifestorm2-revive-4-0.png" alt=""> 最後搞了快兩天才發現原因好簡單 兩者的(0,0)是不一樣的阿 樂園的圖檔(0,0)是由左上算起</p>
+<p>而cocos2dx的(0,0)即左下 所以offset不能直接應用 <img src="/images/lifestorm2-revive-4-1.png" alt=""> <img src="/images/lifestorm2-revive-4-2.png" alt=""></p>
+<p>搞到最後把anchor point 設成左下 並把offsetY的算法加上Grid的高度再減去圖像本身的高度 簡單的說就是換算成以左下為起點的座標就好了 <img src="/images/lifestorm2-revive-4-3.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2017/01/03/lifestorm2-revive-4/" data-id="ck4xswhqz002hg8rtwz25ho0p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-3" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/31/lifestorm2-revive-3/" class="article-date">
+  <time datetime="2016-12-30T22:30:00.000Z" itemprop="datePublished">2016-12-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/31/lifestorm2-revive-3/">樂園復活計劃 - 3</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一年多前也曾經嘗試但失敗</p>
+<p>去到今天終於成功在xcode上面把圖片畫出來了！</p>
+<p>簡單的把原理寫出來</p>
+<ol>
+<li>讀取real.bin中的bytes array</li>
+<li>從指定的地址當中抽取pixels</li>
+<li>若果要存成bitmap方便瀏覽的話，要先自己製作bitmap header 及DIB header , 並把palette填上</li>
+<li>若要在cococ2dx中畫成sprite<ol>
+<li>先把pixels變成palette的顏色 (這邊我選了RGB8888 , 保留了alpha channel)</li>
+<li>把填了色的byte arrays變成一張texture</li>
+<li>用ccsprite畫出來</li>
+</ol>
+</li>
+</ol>
+<p>當中最大的問題是</p>
+<p>cocos2dx不支持RGB8 , 只有I8 及A8 ,　兩者好像都是用來做masking的</p>
+<p>因此需要把RGB8的pixels 轉換成RGBA8888</p>
+<p>直接讀取palette的顏色再寫進去就可以了</p>
+<p>但畫出來的結果卻是上下倒轉</p>
+<p><img src="/images/lifestorm2-revive-3-0.png" alt=""></p>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/31/lifestorm2-revive-3/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2016/12/31/lifestorm2-revive-3/" data-id="ck4xswhr0002kg8rt5jjn1sx8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-2" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/27/lifestorm2-revive-2/" class="article-date">
+  <time datetime="2016-12-26T22:02:00.000Z" itemprop="datePublished">2016-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/27/lifestorm2-revive-2/">樂園復活計劃 - 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>花了一整晚的時間，終於有少許成果了</p>
+<p>左邊是直接讀取real.bin , 右邊是一年前製作出來的bitmap</p>
+<p><img src="/images/lifestorm2-revive-2-0.png" alt=""></p>
+<p>real.bin中儲存的是已壓縮的格式</p>
+<p>而且是JSS自訂的run-length algorithm</p>
+<p>所以也只能靠decompile的一堆源碼</p>
+<p>而我要做的就是將解壓後的pixels , 連同palette還原成bitmap</p>
+<p>格式可參考<a href="https://en.wikipedia.org/wiki/BMP\_file\_format" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/BMP\_file\_format</a></p>
+<p>由於用palette的緣故 , 所以bmp的格式只能是16bit以下 (因為16bit就已經可以直接用來表示顏色，而不必要用調色盤來轉換了)</p>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/27/lifestorm2-revive-2/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2016/12/27/lifestorm2-revive-2/" data-id="ck4xswhqx002dg8rth9ylc8tq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-1" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/27/lifestorm2-revive-1/" class="article-date">
+  <time datetime="2016-12-26T21:58:00.000Z" itemprop="datePublished">2016-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/27/lifestorm2-revive-1/">樂園復活計劃 - 1</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>說真的<br>玩了網遊那麼多年<br>只有一隻遊戲念念不忘<br>都不知道是怨念還是怎樣<br>但肯定的是對這遊戲始終有愛啊<br>你看就連本人的名字也是取自這隻遊戲中的ＮＰＣ(人生中最大的怨念…)</p>
+<p>把他復活其實多年前已經有這個想法<br>問題是一直缺乏行動力<br>而且技術力也是一個問題</p>
+<p>契機是，<br>最近對人生及工作有點迷惘<br>就好像很有幹勁想幹一番事業時<br>卻又站在十字路口中<br>應該向哪一個方向衝呢？<br>所以我決定了小休一段時間<br>想清楚再決定下一步<br>但當我回顧以往的工作時<br>卻發現滿滿的覆歷竟找不到一個可以代表到自己的項目<br>有點苦澀</p>
+<p>所以復活吧樂園！作為一個３０歲人生的小總結也好<br>考驗也好<br>滿足自己曾經許下的小願望吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2016/12/27/lifestorm2-revive-1/" data-id="ck4xswhqu0023g8rtw9n4ai5e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lifestorm2-revive-0" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/26/lifestorm2-revive-0/" class="article-date">
+  <time datetime="2016-12-25T21:59:00.000Z" itemprop="datePublished">2016-12-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/game/">game</a>/<a class="article-category-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/26/lifestorm2-revive-0/">樂園復活計劃 - 0</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>準備開始時就已經有一個晴天霹靂<br>上年寫的LS2READER的源碼弄丟了<br>應該是之前洗機的時候把在C:的源碼刪了…</p>
+<p>印象中我好像寫了好幾天<br>而且殺死了好多腦細胞的 Orz</p>
+<p>幸好當時參考某大大寫的<a href="http://iamgm99.pixnet.net/blog" target="_blank" rel="noopener">SA技術文</a>還在…<br>不然整個計劃還沒開始就ＧＧ了　(Orz…)</p>
+<p>所以先來計劃下目前的幾個大方向</p>
+<ol>
+<li>參考大大的源碼　把之前弄丟的exporter寫出來 (c# + VS)</li>
+<li>研究cocos2dx 直接讀取bin檔的可能性 (c++ + xcode?)<br>2.1 如失敗，研究其他rendering method? (圖片太多, 大概６萬張bmp)<br>2.2 或者其他game engine? (儘量用開源並且支持多平台 web/win/ios/and)</li>
+<li>選一個server side framework<br>3.1 目標nodejs?<br>3.2  smartfox 可以備選<br>3.3  新挑戰可以選python/golang</li>
+<li>想像一下要加新圖檔的流程<br>4.1  bin file 難度高嗎?</li>
+</ol>
+<h3 id="短期目標"><a href="#短期目標" class="headerlink" title="短期目標:"></a>短期目標:</h3><ul>
+<li>先弄一個動作播放器吧</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2016/12/26/lifestorm2-revive-0/" data-id="ck4xswhqw002bg8rtibqveqho" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unity/">unity</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">
+    about me
+  </h3>
+  <div>
+    <ul class="list-inline">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/nandi.wonghonbun">
+          <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-facebook-f fa-inverse fa-stack-1x"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/nandiheath">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cheatsheet/">cheatsheet</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dev/">dev</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/ci/">ci</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elasticsearch/">elasticsearch</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/kubernetes/">kubernetes</a><span class="category-list-count">11</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/game/">game</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/personal/">personal</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aws/" style="font-size: 16.67px;">aws</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/build/" style="font-size: 10px;">build</a> <a href="/tags/c/" style="font-size: 18.33px;">c#</a> <a href="/tags/cassandra/" style="font-size: 10px;">cassandra</a> <a href="/tags/cert-manager/" style="font-size: 10px;">cert-manager</a> <a href="/tags/ci/" style="font-size: 13.33px;">ci</a> <a href="/tags/curator/" style="font-size: 10px;">curator</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/domain/" style="font-size: 10px;">domain</a> <a href="/tags/drain/" style="font-size: 10px;">drain</a> <a href="/tags/ec2/" style="font-size: 10px;">ec2</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/elk/" style="font-size: 10px;">elk</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/filebeat/" style="font-size: 10px;">filebeat</a> <a href="/tags/game/" style="font-size: 18.33px;">game</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/github-pages/" style="font-size: 13.33px;">github-pages</a> <a href="/tags/gitlab/" style="font-size: 11.67px;">gitlab</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/grpc/" style="font-size: 10px;">grpc</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/ingress/" style="font-size: 11.67px;">ingress</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/key/" style="font-size: 10px;">key</a> <a href="/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/tags/kubenetes/" style="font-size: 11.67px;">kubenetes</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/label/" style="font-size: 10px;">label</a> <a href="/tags/letsencrypt/" style="font-size: 10px;">letsencrypt</a> <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logstash/" style="font-size: 10px;">logstash</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 11.67px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/phantomjs/" style="font-size: 10px;">phantomjs</a> <a href="/tags/prometheus/" style="font-size: 13.33px;">prometheus</a> <a href="/tags/proxy-protocol/" style="font-size: 10px;">proxy-protocol</a> <a href="/tags/prune/" style="font-size: 10px;">prune</a> <a href="/tags/reverse-proxy/" style="font-size: 10px;">reverse proxy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/shard/" style="font-size: 10px;">shard</a> <a href="/tags/software-engineering/" style="font-size: 10px;">software-engineering</a> <a href="/tags/sourceip/" style="font-size: 10px;">sourceip</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/submodules/" style="font-size: 10px;">submodules</a> <a href="/tags/system/" style="font-size: 10px;">system</a> <a href="/tags/t2-medium/" style="font-size: 11.67px;">t2.medium</a> <a href="/tags/taint/" style="font-size: 11.67px;">taint</a> <a href="/tags/test-automation/" style="font-size: 10px;">test-automation</a> <a href="/tags/travis/" style="font-size: 10px;">travis</a> <a href="/tags/travisci/" style="font-size: 10px;">travisci</a> <a href="/tags/unity/" style="font-size: 18.33px;">unity</a> <a href="/tags/wordpress/" style="font-size: 11.67px;">wordpress</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Nandi Wong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首頁</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/cheatsheets" class="mobile-nav-link">Cheatsheets</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/01/cheatsheets/kubernetes-cheatsheet/</loc>
+    
+    <lastmod>2020-01-03T06:52:08.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/cheatsheets/index.html</loc>
+    
+    <lastmod>2019-09-18T09:13:44.718Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/01/02/wordpress-migrate-hexo/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.718Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/01/02/wordpress-migrate-hexo-2/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.717Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/09/18/travisci-publish-github-pages/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.717Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/08/23/ten-principles-for-software-engineers/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.717Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2017/12/12/phantomjs-in-docker/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.717Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2017/11/10/nginx-reverse-proxy/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.716Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/05/14/nginx-log-rotate/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.716Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/07/30/mac-cassandra-disk-full/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.716Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2017/01/07/lifestorm2-revive-5/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.716Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2016/12/27/lifestorm2-revive-1/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2016/12/31/lifestorm2-revive-3/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2017/01/03/lifestorm2-revive-4/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2016/12/27/lifestorm2-revive-2/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2016/12/26/lifestorm2-revive-0/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/02/26/grpc-in-kubernetes/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.714Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/09/19/k8s-drain-pod-inside-node/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.714Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/03/kops-nodes-taints/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.714Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/02/15/ingress-preserve-source-ip/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.714Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/02/22/grafana-prometheus/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.713Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/03/29/git-submodule-gitlab-ci/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.713Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/11/02/elasticsearch-disk-full/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.713Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/10/02/es6-destructuring/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.713Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/11/elasticsearch-delete-indices/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.712Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/09/19/elasticsearch-cluster-oom/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.712Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/04/20/dockerize-selenium-chromedriver/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.711Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/04/27/elasticsearch-and-curator/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.711Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/08/14/ec2-cpu-credit-monitoring-in-prometheus/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.711Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/12/13/docker-auto-cleanup/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.710Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/10/04/different-private-key-for-git/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.710Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2017/12/06/docker-build-error-rm-rf-cannot-remove-some-path-directory-not-empty/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.710Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/03/19/deploy-npm-package-with-travis/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.709Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/08/02/cityline-bot/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.709Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/02/21/choose-k8s-node-type-wisely/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.709Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/01/cheatsheets/mongo-cheatsheet/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.708Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/01/cheatsheets/useful-tools-cheatsheet/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.708Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/01/01/cheatsheets/kops-cheatsheet/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.707Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2019/03/29/cert-manager-with-kubernetes-ingress/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.707Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/2018/09/19/aws-t2-medium/</loc>
+    
+    <lastmod>2019-09-18T09:13:44.706Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.nandiheath.com/404.html</loc>
+    
+    <lastmod>2019-09-18T09:13:44.693Z</lastmod>
+    
+  </url>
+  
+</urlset>

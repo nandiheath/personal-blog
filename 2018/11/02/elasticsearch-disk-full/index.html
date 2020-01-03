@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-33374738-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>當elasticsearch硬碟滿了 | 踩坑日記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="不小心把dev場gRPC的debug log打開了，導致每天產生了差不多800萬條event把本來就剩不了多少的空間直接塞爆了，碰巧prometheus跟logstash在同一個節點上prometheus不幸地掛掉了導致連訊息也沒收到過了兩三天才發覺數據沒了才發現出事 最後要搞了兩天才把數據回復幸運的是開始時就已經設置了一些機制去防錯因此這次才沒有發展成為災難性的事件就寫了以下的一些分享">
+<meta name="keywords" content="aws,elasticsearch,elk,filebeat,k8s,logstash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="當elasticsearch硬碟滿了">
+<meta property="og:url" content="https://blog.nandiheath.com/2018/11/02/elasticsearch-disk-full/index.html">
+<meta property="og:site_name" content="踩坑日記">
+<meta property="og:description" content="不小心把dev場gRPC的debug log打開了，導致每天產生了差不多800萬條event把本來就剩不了多少的空間直接塞爆了，碰巧prometheus跟logstash在同一個節點上prometheus不幸地掛掉了導致連訊息也沒收到過了兩三天才發覺數據沒了才發現出事 最後要搞了兩天才把數據回復幸運的是開始時就已經設置了一些機制去防錯因此這次才沒有發展成為災難性的事件就寫了以下的一些分享">
+<meta property="og:locale" content="zh-hk">
+<meta property="og:updated_time" content="2019-09-18T09:13:44.713Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="當elasticsearch硬碟滿了">
+<meta name="twitter:description" content="不小心把dev場gRPC的debug log打開了，導致每天產生了差不多800萬條event把本來就剩不了多少的空間直接塞爆了，碰巧prometheus跟logstash在同一個節點上prometheus不幸地掛掉了導致連訊息也沒收到過了兩三天才發覺數據沒了才發現出事 最後要搞了兩天才把數據回復幸運的是開始時就已經設置了一些機制去防錯因此這次才沒有發展成為災難性的事件就寫了以下的一些分享">
+  
+    <link rel="alternate" href="/atom.xml" title="踩坑日記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v3.1&appId=263598971027823&autoLogAppEvents=1&colorscheme=dark&order_by=time";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">踩坑日記</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首頁</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/cheatsheets">Cheatsheets</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.nandiheath.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-elasticsearch-disk-full" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/02/elasticsearch-disk-full/" class="article-date">
+  <time datetime="2018-11-02T08:51:17.000Z" itemprop="datePublished">2018-11-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      當elasticsearch硬碟滿了
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>不小心把dev場gRPC的debug log打開了，導致每天產生了差不多800萬條event<br>把本來就剩不了多少的空間直接塞爆了，碰巧prometheus跟logstash在同一個節點上<br>prometheus不幸地掛掉了導致連訊息也沒收到<br>過了兩三天才發覺數據沒了才發現出事</p>
+<p>最後要搞了兩天才把數據回復<br>幸運的是開始時就已經設置了一些機制去防錯<br>因此這次才沒有發展成為災難性的事件<br>就寫了以下的一些分享</p>
+<a id="more"></a>
+<hr>
+<h3 id="1-log-shipper很重要"><a href="#1-log-shipper很重要" class="headerlink" title="1. log shipper很重要"></a>1. log shipper很重要</h3><p>在一開始使用ELK stack時也有考慮過經TCP直接由logger經TCP直接傳給logstash/es<br>但考慮到多個因素如網絡/服務器穩定性等就決定用filebeat<br>filebeat的好處是你直接把日誌打到file裡去，然後再加一個logrotate去設定輪替<br><strong>這點很重要，不然日誌的檔案只會增不會減，儲存空間會變成另一個問題</strong><br>然後經filebeat上傳到logstash/es</p>
+<p>如果你使用network logging的話<br>只要logstash/es 報錯，那麼你那段時間的log就真的變沒有了(除非你會重寫，但也因此有更多的東西要兼顧)<br>而用filebeat的話你還有一段時間可以排錯修復(logrotate 一般就7-10日)<br>這正正給了我時間去把那些沒有上傳的log 重新上載…</p>
+<h3 id="2-non-prod的log最好用curator每日清掉"><a href="#2-non-prod的log最好用curator每日清掉" class="headerlink" title="2. non-prod的log最好用curator每日清掉"></a>2. non-prod的log最好用curator每日清掉</h3><p>若非要測試，那麼非production場的數據應該要及早刪掉<br>不然index數量只會越來越多…</p>
+<h3 id="3-match-timestamp是很重要的"><a href="#3-match-timestamp是很重要的" class="headerlink" title="3. match timestamp是很重要的"></a>3. match timestamp是很重要的</h3><p>ES本身的設定是你什麼時侯上傳event給他，他就會預設把該event的時間設定為該時間<br>可以透過logstash把log裡面的時間覆蓋掉本來的timestamp<br>這個好處是event在es的timestamp變得更有意義(由上傳時間變為發生時間)<br>更大的好處是如果你高負載/重新上傳時時間資訊就不會丟失</p>
+<h3 id="4-ES本身的硬碟防爆機制"><a href="#4-ES本身的硬碟防爆機制" class="headerlink" title="4. ES本身的硬碟防爆機制"></a>4. ES本身的硬碟防爆機制</h3><p>詳細可看這裡<a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.x/disk-allocator.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.x/disk-allocator.html</a><br>簡單來說就是ES會把硬碟快滿分別三個階段</p>
+<p><code>cluster.routing.allocation.disk.watermark.low</code></p>
+<ul>
+<li>預設85% 當某個節點超過這個限額後ES會停止分配shards到其之上</li>
+</ul>
+<p><code>cluster.routing.allocation.disk.watermark.high</code></p>
+<ul>
+<li>預設90% 當某個節點超過這個限額後ES會嘗試把該節點的shards分配到其他節點上</li>
+</ul>
+<p><code>cluster.routing.allocation.disk.watermark.flood_stage</code></p>
+<ul>
+<li><p>預設95% 當某個節點超過這個限額後ES會把該節點的所有index都加一個flag <code>index.blocks.read_only_allow_delete</code></p>
+<p>意味著那些index變成唯讀，防止硬碟真的爆滿</p>
+</li>
+</ul>
+<hr>
+<p>最後回復數據時卡最久就是<code>index.blocks.read_only_allow_delete</code>這個機制<br>因為當我把兩個data node的硬碟空間都增加了之後<br>logstash/filebeat都卡住不動，es也沒有看到有新數據進來<br>搞了很久才發現這個機制</p>
+<p>而要解決也很解單的，只需要更新每個index的設定，把這枝flag設成null就可以了<br>(當然最好就是逐個index去解鎖)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># reset all the read only flag for all indices</span></span><br><span class="line">PUT /_all/_settings</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"index.blocks.read\_only\_allow_delete"</span>: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2018/11/02/elasticsearch-disk-full/" data-id="ck4xswhqb001dg8rtetftwgrb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elk/">elk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/filebeat/">filebeat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/k8s/">k8s</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/logstash/">logstash</a></li></ul>
+
+      
+        <section id="comments">
+<div class="fb-comments" data-href="
+https://blog.nandiheath.com/2018/11/02/elasticsearch-disk-full/" data-numposts="20"></div>
+</section>
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/13/docker-auto-cleanup/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          清除docker主機上的垃圾
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/04/different-private-key-for-git/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">利用不同的private key去存取git</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">
+    about me
+  </h3>
+  <div>
+    <ul class="list-inline">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/nandi.wonghonbun">
+          <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-facebook-f fa-inverse fa-stack-1x"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/nandiheath">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cheatsheet/">cheatsheet</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dev/">dev</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/ci/">ci</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elasticsearch/">elasticsearch</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/kubernetes/">kubernetes</a><span class="category-list-count">11</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/game/">game</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/personal/">personal</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aws/" style="font-size: 16.67px;">aws</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/build/" style="font-size: 10px;">build</a> <a href="/tags/c/" style="font-size: 18.33px;">c#</a> <a href="/tags/cassandra/" style="font-size: 10px;">cassandra</a> <a href="/tags/cert-manager/" style="font-size: 10px;">cert-manager</a> <a href="/tags/ci/" style="font-size: 13.33px;">ci</a> <a href="/tags/curator/" style="font-size: 10px;">curator</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/domain/" style="font-size: 10px;">domain</a> <a href="/tags/drain/" style="font-size: 10px;">drain</a> <a href="/tags/ec2/" style="font-size: 10px;">ec2</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/elk/" style="font-size: 10px;">elk</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/filebeat/" style="font-size: 10px;">filebeat</a> <a href="/tags/game/" style="font-size: 18.33px;">game</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/github-pages/" style="font-size: 13.33px;">github-pages</a> <a href="/tags/gitlab/" style="font-size: 11.67px;">gitlab</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/grpc/" style="font-size: 10px;">grpc</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/ingress/" style="font-size: 11.67px;">ingress</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/key/" style="font-size: 10px;">key</a> <a href="/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/tags/kubenetes/" style="font-size: 11.67px;">kubenetes</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/label/" style="font-size: 10px;">label</a> <a href="/tags/letsencrypt/" style="font-size: 10px;">letsencrypt</a> <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logstash/" style="font-size: 10px;">logstash</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 11.67px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/phantomjs/" style="font-size: 10px;">phantomjs</a> <a href="/tags/prometheus/" style="font-size: 13.33px;">prometheus</a> <a href="/tags/proxy-protocol/" style="font-size: 10px;">proxy-protocol</a> <a href="/tags/prune/" style="font-size: 10px;">prune</a> <a href="/tags/reverse-proxy/" style="font-size: 10px;">reverse proxy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/shard/" style="font-size: 10px;">shard</a> <a href="/tags/software-engineering/" style="font-size: 10px;">software-engineering</a> <a href="/tags/sourceip/" style="font-size: 10px;">sourceip</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/submodules/" style="font-size: 10px;">submodules</a> <a href="/tags/system/" style="font-size: 10px;">system</a> <a href="/tags/t2-medium/" style="font-size: 11.67px;">t2.medium</a> <a href="/tags/taint/" style="font-size: 11.67px;">taint</a> <a href="/tags/test-automation/" style="font-size: 10px;">test-automation</a> <a href="/tags/travis/" style="font-size: 10px;">travis</a> <a href="/tags/travisci/" style="font-size: 10px;">travisci</a> <a href="/tags/unity/" style="font-size: 18.33px;">unity</a> <a href="/tags/wordpress/" style="font-size: 11.67px;">wordpress</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Nandi Wong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首頁</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/cheatsheets" class="mobile-nav-link">Cheatsheets</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

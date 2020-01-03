@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-33374738-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>[轉載]寫給工程師的十條精進原則 | 踩坑日記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近看到美團的技術團隊所寫的一篇文章有感，特此分享傳送門: https://tech.meituan.com/10_principles_for_engineers.html裡面提到有幾點也是現在我的團隊所缺乏的，藉此也可好好檢視下自己的不足   以终为始 “以终为始”（Begin With The End In Mind），是史蒂芬·柯维在《高效能人士的七个习惯》中提到的一个习惯。它是以所有事物">
+<meta name="keywords" content="software-engineering">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[轉載]寫給工程師的十條精進原則">
+<meta property="og:url" content="https://blog.nandiheath.com/2018/08/23/ten-principles-for-software-engineers/index.html">
+<meta property="og:site_name" content="踩坑日記">
+<meta property="og:description" content="最近看到美團的技術團隊所寫的一篇文章有感，特此分享傳送門: https://tech.meituan.com/10_principles_for_engineers.html裡面提到有幾點也是現在我的團隊所缺乏的，藉此也可好好檢視下自己的不足   以终为始 “以终为始”（Begin With The End In Mind），是史蒂芬·柯维在《高效能人士的七个习惯》中提到的一个习惯。它是以所有事物">
+<meta property="og:locale" content="zh-hk">
+<meta property="og:updated_time" content="2019-09-18T09:13:44.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[轉載]寫給工程師的十條精進原則">
+<meta name="twitter:description" content="最近看到美團的技術團隊所寫的一篇文章有感，特此分享傳送門: https://tech.meituan.com/10_principles_for_engineers.html裡面提到有幾點也是現在我的團隊所缺乏的，藉此也可好好檢視下自己的不足   以终为始 “以终为始”（Begin With The End In Mind），是史蒂芬·柯维在《高效能人士的七个习惯》中提到的一个习惯。它是以所有事物">
+  
+    <link rel="alternate" href="/atom.xml" title="踩坑日記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v3.1&appId=263598971027823&autoLogAppEvents=1&colorscheme=dark&order_by=time";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">踩坑日記</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首頁</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/cheatsheets">Cheatsheets</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.nandiheath.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ten-principles-for-software-engineers" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/23/ten-principles-for-software-engineers/" class="article-date">
+  <time datetime="2018-08-23T09:34:25.000Z" itemprop="datePublished">2018-08-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dev/">dev</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [轉載]寫給工程師的十條精進原則
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看到美團的技術團隊所寫的一篇文章有感，特此分享<br>傳送門: <a href="https://tech.meituan.com/10_principles_for_engineers.html" target="_blank" rel="noopener">https://tech.meituan.com/10_principles_for_engineers.html</a><br>裡面提到有幾點也是現在我的團隊所缺乏的，藉此也可好好檢視下自己的不足  </p>
+<h2 id="以终为始"><a href="#以终为始" class="headerlink" title="以终为始"></a>以终为始</h2><blockquote>
+<p>“以终为始”（Begin With The End In Mind），是史蒂芬·柯维在《高效能人士的七个习惯》中提到的一个习惯。它是以所有事物都经过两次创造的原则（第一次为心智上的创造，第二次为实际的创造）为基础的。直观的表达就是：<strong>先想清楚目标，然后努力实现。</strong></p>
+</blockquote>
+<p>很多時侯工程師的壞習慣就是想到就動手做，但沒規劃好做出來的其實跟需求相去甚遠<br>先想清楚，制定好一個能量化的目標<br>然後以該目標為前題把需要的步驟詳列出來<br>為做而做並不會為項目帶來什麼</p>
+<a id="more"></a>
+<h2 id="闭环思维"><a href="#闭环思维" class="headerlink" title="闭环思维"></a>闭环思维</h2><blockquote>
+<p><strong>真正的闭环，要求我们对工作中的事情都能够养成良好的思维习惯，沟通要有结论，通知要有反馈，To Do要有验收。</strong></p>
+</blockquote>
+<p>跟一直以來提倡的TDD很相似，現實卻是時間不容許<br>很多時侯跟別人討論一大輪結果卻不了了之，這個時侯就應該由Owner主導，訂下相關的目標及驗收準則<br>好讓一件事有一個『閉環』，這就跟scrum的workflow類似<br><code>PENDING&gt;IN PROGRESS&gt;WAITING FOR REVIEW&gt; CLOSE</code><br>永遠需要一個CLOSE，否則issue只會無限的累積下去</p>
+<h2 id="事不过二"><a href="#事不过二" class="headerlink" title="事不过二"></a>事不过二</h2><blockquote>
+<p>  一层含义是<strong>“所有的评审与问题讨论，不要超过两次”</strong>。 …… “事不过二”原则的另一层含义，是<strong>“同样的错误不能犯第二次”</strong>。每次故障之后，Casestudy都必须进行深刻的总结复盘，对故障原因进行5Why分析，给出明确可执行的To Do List。</p>
+</blockquote>
+<p>事不過二是一個重要的思維，無論是討論還是除錯。工作上無數次出現過就同一事情發生N次的討論，最後也沒有結論。問題重心其一是缺乏Owner主導，沒有明確的討論方向，很多時侯討論到流於表面，或只就眼前發生的事情討論，沒有定論也就不能閉環；其二是缺乏文檔，導致之後會忘記以前所討論的內容。 解決方案是加入Owner思維，及每次討論都需要有一個明確的TODO，並需要把結論寫進文檔   而除錯亦是另一個問題所在。每當有BUG出現時，大多都沒有詳細把該問題分級，而是選擇立即去解決，事後也沒有詳細的記錄相關的步驟。而之後同樣的問題再次出現時，就是憑經驗去解決，但很多時侯都會重新思考一些曾經經過的步驟，做成浪費。 解決方案當然是把除錯步驟寫進文檔，但亦需要拿捏當中的程度，考慮什麼類型的BUG才需要詳列其步驟。  </p>
+<h2 id="设计优先"><a href="#设计优先" class="headerlink" title="设计优先"></a>设计优先</h2><blockquote>
+<p>“设计优先”这条原则，相对来说更加具体一些。之所以单列一项，是因为架构设计太重要了。Uncle Bob曾说过：“软件架构的目标，是为了让构建与维护系统的所需人力资源最小化。” <strong>……</strong> <strong>“设计优先”这一原则，要求写别人看得懂的设计</strong>。我们了解一个系统最直接的途径就是结合设计文档与代码。</p>
+</blockquote>
+<p>MD&gt;5就需要文檔，絕對同意  </p>
+<h2 id="空杯心态"><a href="#空杯心态" class="headerlink" title="空杯心态"></a>空杯心态</h2><blockquote>
+<p>“满招损，谦受益”，“空杯心态”是最后一项原则。我觉得这也是一个人能够持续成长的前提。做技术的人，骨子里通常有股傲气，并且会随着资历、成绩的提升而不断增加。</p>
+</blockquote>
+<p>常言道：學而後知不足<br>你懂的再多，但每個人也肯定會懂一些你不懂的事<br>擺正心態，你需要的是進步，而不是自滿<br></p>
+<p>以上，共勉之</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2018/08/23/ten-principles-for-software-engineers/" data-id="ck4xswhr80035g8rth7coes5m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-engineering/">software-engineering</a></li></ul>
+
+      
+        <section id="comments">
+<div class="fb-comments" data-href="
+https://blog.nandiheath.com/2018/08/23/ten-principles-for-software-engineers/" data-numposts="20"></div>
+</section>
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/19/elasticsearch-cluster-oom/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ElasticSearch Cluster出事了
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/14/ec2-cpu-credit-monitoring-in-prometheus/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Prometheus中監控AWS EC2的CPU credit</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">
+    about me
+  </h3>
+  <div>
+    <ul class="list-inline">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/nandi.wonghonbun">
+          <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-facebook-f fa-inverse fa-stack-1x"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/nandiheath">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cheatsheet/">cheatsheet</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dev/">dev</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/ci/">ci</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elasticsearch/">elasticsearch</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/kubernetes/">kubernetes</a><span class="category-list-count">11</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/game/">game</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/personal/">personal</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aws/" style="font-size: 16.67px;">aws</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/build/" style="font-size: 10px;">build</a> <a href="/tags/c/" style="font-size: 18.33px;">c#</a> <a href="/tags/cassandra/" style="font-size: 10px;">cassandra</a> <a href="/tags/cert-manager/" style="font-size: 10px;">cert-manager</a> <a href="/tags/ci/" style="font-size: 13.33px;">ci</a> <a href="/tags/curator/" style="font-size: 10px;">curator</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/domain/" style="font-size: 10px;">domain</a> <a href="/tags/drain/" style="font-size: 10px;">drain</a> <a href="/tags/ec2/" style="font-size: 10px;">ec2</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/elk/" style="font-size: 10px;">elk</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/filebeat/" style="font-size: 10px;">filebeat</a> <a href="/tags/game/" style="font-size: 18.33px;">game</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/github-pages/" style="font-size: 13.33px;">github-pages</a> <a href="/tags/gitlab/" style="font-size: 11.67px;">gitlab</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/grpc/" style="font-size: 10px;">grpc</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/ingress/" style="font-size: 11.67px;">ingress</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/key/" style="font-size: 10px;">key</a> <a href="/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/tags/kubenetes/" style="font-size: 11.67px;">kubenetes</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/label/" style="font-size: 10px;">label</a> <a href="/tags/letsencrypt/" style="font-size: 10px;">letsencrypt</a> <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logstash/" style="font-size: 10px;">logstash</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 11.67px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/phantomjs/" style="font-size: 10px;">phantomjs</a> <a href="/tags/prometheus/" style="font-size: 13.33px;">prometheus</a> <a href="/tags/proxy-protocol/" style="font-size: 10px;">proxy-protocol</a> <a href="/tags/prune/" style="font-size: 10px;">prune</a> <a href="/tags/reverse-proxy/" style="font-size: 10px;">reverse proxy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/shard/" style="font-size: 10px;">shard</a> <a href="/tags/software-engineering/" style="font-size: 10px;">software-engineering</a> <a href="/tags/sourceip/" style="font-size: 10px;">sourceip</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/submodules/" style="font-size: 10px;">submodules</a> <a href="/tags/system/" style="font-size: 10px;">system</a> <a href="/tags/t2-medium/" style="font-size: 11.67px;">t2.medium</a> <a href="/tags/taint/" style="font-size: 11.67px;">taint</a> <a href="/tags/test-automation/" style="font-size: 10px;">test-automation</a> <a href="/tags/travis/" style="font-size: 10px;">travis</a> <a href="/tags/travisci/" style="font-size: 10px;">travisci</a> <a href="/tags/unity/" style="font-size: 18.33px;">unity</a> <a href="/tags/wordpress/" style="font-size: 11.67px;">wordpress</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Nandi Wong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首頁</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/cheatsheets" class="mobile-nav-link">Cheatsheets</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-33374738-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>ElasticSearch Cluster出事了 | 踩坑日記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近一次在kibana上的跨index搜索後elasticsearch其中一個node就不斷重啟而每次reshard的時間也越來越長 最後發現問題原來出自kubernetes上放es的節點上忘記把他taint了結果其他POD也分配到上面運行結果就造成了一個惡性循環內存佔用太多導致OOM &amp;gt; POD重啟 &amp;gt;　ES節點重新加入到ES cluster &amp;gt; 重新分配shard &amp;gt;">
+<meta name="keywords" content="elasticsearch,kubenetes,taint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch Cluster出事了">
+<meta property="og:url" content="https://blog.nandiheath.com/2018/09/19/elasticsearch-cluster-oom/index.html">
+<meta property="og:site_name" content="踩坑日記">
+<meta property="og:description" content="最近一次在kibana上的跨index搜索後elasticsearch其中一個node就不斷重啟而每次reshard的時間也越來越長 最後發現問題原來出自kubernetes上放es的節點上忘記把他taint了結果其他POD也分配到上面運行結果就造成了一個惡性循環內存佔用太多導致OOM &amp;gt; POD重啟 &amp;gt;　ES節點重新加入到ES cluster &amp;gt; 重新分配shard &amp;gt;">
+<meta property="og:locale" content="zh-hk">
+<meta property="og:image" content="https://blog.nandiheath.com/images/elasticsearch-cluster-oom-0.png">
+<meta property="og:updated_time" content="2019-09-18T09:13:44.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElasticSearch Cluster出事了">
+<meta name="twitter:description" content="最近一次在kibana上的跨index搜索後elasticsearch其中一個node就不斷重啟而每次reshard的時間也越來越長 最後發現問題原來出自kubernetes上放es的節點上忘記把他taint了結果其他POD也分配到上面運行結果就造成了一個惡性循環內存佔用太多導致OOM &amp;gt; POD重啟 &amp;gt;　ES節點重新加入到ES cluster &amp;gt; 重新分配shard &amp;gt;">
+<meta name="twitter:image" content="https://blog.nandiheath.com/images/elasticsearch-cluster-oom-0.png">
+  
+    <link rel="alternate" href="/atom.xml" title="踩坑日記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v3.1&appId=263598971027823&autoLogAppEvents=1&colorscheme=dark&order_by=time";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">踩坑日記</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首頁</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/cheatsheets">Cheatsheets</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.nandiheath.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-elasticsearch-cluster-oom" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/19/elasticsearch-cluster-oom/" class="article-date">
+  <time datetime="2018-09-19T03:33:30.000Z" itemprop="datePublished">2018-09-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ElasticSearch Cluster出事了
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近一次在kibana上的跨index搜索後<br>elasticsearch其中一個node就不斷重啟<br>而每次reshard的時間也越來越長<br><img src="/images/elasticsearch-cluster-oom-0.png" alt=""></p>
+<p>最後發現問題原來出自kubernetes上<br>放es的節點上忘記把他taint了<br>結果其他POD也分配到上面運行<br>結果就造成了一個惡性循環<br>內存佔用太多導致OOM &gt; POD重啟 &gt;　ES節點重新加入到ES cluster &gt; 重新分配shard &gt; 內存佔用太多導致OOM  </p>
+<p>雖然說是k8s的設定不當<br>但es上的確也有些設定問題需要改善</p>
+<a id="more"></a>
+<hr>
+<h3 id="1-shard數量太多"><a href="#1-shard數量太多" class="headerlink" title="1. shard數量太多"></a>1. shard數量太多</h3><p>首先由於這個ES是用來分析日誌，不同的service的index也不同，而index採用的是[env]-[service]-[YYYY-MM-DD]這個方式，結果每日產生的index數量就是大概 5 x 3 x 2(3個環境 dev/stag/prod，5個服務，每個index兩個shard)</p>
+<h4 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h4><p>會用curator刪掉的index才用YYYY-MM-DD,　其他的用YYYY-MM就可以了，因為通常只查詢兩個月內的數據<br>而採用YYYY-MM的應該設定成shard: 5, replica: 1，方便負戴管理<br>也可以利用/index/close的指令來把很少用的index關掉，雖然說會額外增的硬碟容量… <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html</a></p>
+<h3 id="2-master-data-node-負載不均"><a href="#2-master-data-node-負載不均" class="headerlink" title="2. master/data node 負載不均"></a>2. master/data node 負載不均</h3><p>因為省錢的關係只開了兩台AWS R4的node,，各自有一個master + data node<br>低負載環境下沒問題，但每當reschedule的時侯CPU就會衝到很高了</p>
+<h4 id="解決方案-1"><a href="#解決方案-1" class="headerlink" title="解決方案"></a>解決方案</h4><p>多配兩台機來跑master<br>雖然文檔說master需求不大，但”不大”也只是相對起data node來說…</p>
+<h3 id="3-replica設定不當"><a href="#3-replica設定不當" class="headerlink" title="3. replica設定不當"></a>3. replica設定不當</h3><p><code>shard:1 replica:1</code>在只有兩個data node的時侯是相當雞肋的<br>而且這邊我也不肯定到底是不是hard affinity<br>有時重reschedule的時便總發現有少部份( ~50/20000)的unassigned_shards</p>
+<h4 id="解決方案-2"><a href="#解決方案-2" class="headerlink" title="解決方案"></a>解決方案</h4><p>最少配置３台data node<br>而且用原本的配置<code>shard:5 replica:1</code><br>但前提index的數量要少但容量要大<br>log型式的index還是用回<code>shard:1 replica:1</code>的配置</p>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>elastic search裡面有很多很多設定<br>一開始的時侯資料量不大，不會引起太大問題<br>但當數量增加到某個量級的時侯就會開始造成一堆問題<br>理想當然是在開始設計架構的時侯就已經考慮到每種<code>index</code>的應用狀況<br>從而設定好<code>shard</code>/<code>replica</code>等的數量<br>否則上線之後才更改<code>index</code>或相關的設定可是相當危險的…</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2018/09/19/elasticsearch-cluster-oom/" data-id="ck4xswhq80017g8rtb6beija2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubenetes/">kubenetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/taint/">taint</a></li></ul>
+
+      
+        <section id="comments">
+<div class="fb-comments" data-href="
+https://blog.nandiheath.com/2018/09/19/elasticsearch-cluster-oom/" data-numposts="20"></div>
+</section>
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/19/aws-t2-medium/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AWS中t2.medium的二三事
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/23/ten-principles-for-software-engineers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[轉載]寫給工程師的十條精進原則</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">
+    about me
+  </h3>
+  <div>
+    <ul class="list-inline">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/nandi.wonghonbun">
+          <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-facebook-f fa-inverse fa-stack-1x"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/nandiheath">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cheatsheet/">cheatsheet</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dev/">dev</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/ci/">ci</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elasticsearch/">elasticsearch</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/kubernetes/">kubernetes</a><span class="category-list-count">11</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/game/">game</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/personal/">personal</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aws/" style="font-size: 16.67px;">aws</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/build/" style="font-size: 10px;">build</a> <a href="/tags/c/" style="font-size: 18.33px;">c#</a> <a href="/tags/cassandra/" style="font-size: 10px;">cassandra</a> <a href="/tags/cert-manager/" style="font-size: 10px;">cert-manager</a> <a href="/tags/ci/" style="font-size: 13.33px;">ci</a> <a href="/tags/curator/" style="font-size: 10px;">curator</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/domain/" style="font-size: 10px;">domain</a> <a href="/tags/drain/" style="font-size: 10px;">drain</a> <a href="/tags/ec2/" style="font-size: 10px;">ec2</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/elk/" style="font-size: 10px;">elk</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/filebeat/" style="font-size: 10px;">filebeat</a> <a href="/tags/game/" style="font-size: 18.33px;">game</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/github-pages/" style="font-size: 13.33px;">github-pages</a> <a href="/tags/gitlab/" style="font-size: 11.67px;">gitlab</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/grpc/" style="font-size: 10px;">grpc</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/ingress/" style="font-size: 11.67px;">ingress</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/key/" style="font-size: 10px;">key</a> <a href="/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/tags/kubenetes/" style="font-size: 11.67px;">kubenetes</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/label/" style="font-size: 10px;">label</a> <a href="/tags/letsencrypt/" style="font-size: 10px;">letsencrypt</a> <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logstash/" style="font-size: 10px;">logstash</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 11.67px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/phantomjs/" style="font-size: 10px;">phantomjs</a> <a href="/tags/prometheus/" style="font-size: 13.33px;">prometheus</a> <a href="/tags/proxy-protocol/" style="font-size: 10px;">proxy-protocol</a> <a href="/tags/prune/" style="font-size: 10px;">prune</a> <a href="/tags/reverse-proxy/" style="font-size: 10px;">reverse proxy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/shard/" style="font-size: 10px;">shard</a> <a href="/tags/software-engineering/" style="font-size: 10px;">software-engineering</a> <a href="/tags/sourceip/" style="font-size: 10px;">sourceip</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/submodules/" style="font-size: 10px;">submodules</a> <a href="/tags/system/" style="font-size: 10px;">system</a> <a href="/tags/t2-medium/" style="font-size: 11.67px;">t2.medium</a> <a href="/tags/taint/" style="font-size: 11.67px;">taint</a> <a href="/tags/test-automation/" style="font-size: 10px;">test-automation</a> <a href="/tags/travis/" style="font-size: 10px;">travis</a> <a href="/tags/travisci/" style="font-size: 10px;">travisci</a> <a href="/tags/unity/" style="font-size: 18.33px;">unity</a> <a href="/tags/wordpress/" style="font-size: 11.67px;">wordpress</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Nandi Wong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首頁</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/cheatsheets" class="mobile-nav-link">Cheatsheets</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

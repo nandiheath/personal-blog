@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-33374738-3', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>踩坑日記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="踩坑日記">
+<meta property="og:url" content="https://blog.nandiheath.com/index.html">
+<meta property="og:site_name" content="踩坑日記">
+<meta property="og:locale" content="zh-hk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="踩坑日記">
+  
+    <link rel="alternate" href="/atom.xml" title="踩坑日記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) return;
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/zh_HK/sdk.js#xfbml=1&version=v3.1&appId=263598971027823&autoLogAppEvents=1&colorscheme=dark&order_by=time";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">踩坑日記</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首頁</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/cheatsheets">Cheatsheets</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.nandiheath.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  <!-- Hide the post of some categories -->
+  
+    <article id="post-travisci-publish-github-pages" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/18/travisci-publish-github-pages/" class="article-date">
+  <time datetime="2019-09-18T09:13:44.717Z" itemprop="datePublished">2019-09-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/ci/">ci</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/18/travisci-publish-github-pages/">利用TravisCI直接發佈靜態網頁到Github Pages上</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>github 有一個工具讓你可以存放一些簡單的靜態網頁</p>
+<ul>
+<li><a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a></li>
+<li><a href="https://help.github.com/articles/what-is-github-pages/" target="_blank" rel="noopener">什麼是Github Pages</a></li>
+</ul>
+<p>而且是完全免費！(當然有幾個附帶的條件)</p>
+<ul>
+<li>1GB容量</li>
+<li>只支持靜態網頁(html/css/js等)</li>
+<li>每月100GB流量</li>
+<li><a href="https://help.github.com/articles/what-is-github-pages/" target="_blank" rel="noopener">…</a></li>
+</ul>
+<p>只要你在github的repo中放上你的網頁 (如index.html)<br>你就可以在 https://[username].github.io/[repo_name] 中看到你放上去的網站<br>亦可以設定一個首頁<br>只要repo的名字是 <strong>[username].github.io</strong><br>你就可以直接在 <code>https://[username].github.io</code> 看到你的網站了</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/09/18/travisci-publish-github-pages/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/09/18/travisci-publish-github-pages/" data-id="ck4xswhra0039g8rt3mlm19ek" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github-pages/">github-pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/travisci/">travisci</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-cert-manager-with-kubernetes-ingress" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/29/cert-manager-with-kubernetes-ingress/" class="article-date">
+  <time datetime="2019-03-29T07:15:19.000Z" itemprop="datePublished">2019-03-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/29/cert-manager-with-kubernetes-ingress/">cert-manager-with-kubernetes-ingress</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>說起免費的HTTPS cert<br>很多人都會用let’s encrypt的服務<br>原因是簡單，易用<br>在VM上裝一個script然後簡單配置一下nginx就可以生成一張數個月的ssl certificate</p>
+<p>但當來到kubernetes就有點麻煩<br>原因是你配置的服務很多可能都不在同一部機上<br>當你生成了一張ssl cert之後可能要手動去更新相應的配置<br>而且要建立自動更新難度更大</p>
+<p>所以這時侯就可以用到cert-manager了<br><a href="https://github.com/jetstack/cert-manager" target="_blank" rel="noopener">https://github.com/jetstack/cert-manager</a><br>他是一個k8s的addon<br>可以生成一系列的resources去幫以上的配置自動化<br>而且除了let’s encrypt之外也支持其他的ssl cert發行者</p>
+<p>如果是用let’s encrypt的話<br>原理大致如下</p>
+<p>首先你會生成一個ingress<br>並加一些特殊的annotation去表明你想cert-manager去幫你配置ssl cert<br>在這邊你需要先指定一個secret，讓cert-manager把配置好的ssl存放在裡面</p>
+<p>之後cert-manager接收到相應的事件觸發後就會開始工作流程<br>他會先建立一張self-signed的ssl cert並放在該secret裡面<br>這個時侯你去訪問ingress就會發現https已經能夠使用<br>但ssl cert是不被瀏覽器信任的</p>
+<p>然後cert-manager會建立一個暫時的ingress<br>去接收來自let’s encrypt的acme challenge<br>去證明你擁有該域名<br>如果驗證成功的話就會生成一張正確的ssl cert並更新secret<br>之後你再訪問https就會看到鎖頭了</p>
+<p>實際操作這邊就懶得說了<br>直接看這裡<br><a href="https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/index.html" target="_blank" rel="noopener">https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/index.html</a></p>
+<p>有一點範例沒有說清楚<br>但卻至關重要，因為你如你是用nginx-ingress的話好有可能會出現這個問題</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">example</span></span><br><span class="line"><span class="attr">  annotations:</span></span><br><span class="line">    <span class="string">certmanager.k8s.io/cluster-issuer:</span> <span class="string">"letsencrypt-prod"</span></span><br><span class="line">    <span class="string">certmanager.k8s.io/acme-challenge-type:</span> <span class="string">http01</span></span><br><span class="line">    <span class="string">certmanager.k8s.io/acme-http01-edit-in-place:</span> <span class="string">"true"</span></span><br><span class="line">    <span class="string">nginx.ingress.kubernetes.io/ssl-redirect:</span> <span class="string">"true"</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  tls:</span></span><br><span class="line"><span class="attr">  - hosts:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">a1.example.com</span></span><br><span class="line"><span class="attr">    secretName:</span> <span class="string">al-example-com-tls</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">  - host:</span> <span class="string">a1.example.com</span></span><br><span class="line"><span class="attr">    http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/api</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">backend</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>當中<code>certmanager.k8s.io/acme-http01-edit-in-place: &quot;true&quot;</code><br>這句是很重要的</p>
+<p>因為nginx-ingress是不能如時接受兩個ingress resources<br>就是如果你有兩個ingress，而兩個都有同一個host的話<br>只有其中一個能運行，另一個則無效<br>大概猜到原因是nginx的配置有關<br>因為nginx-ingress-controller會接收ingress的配置並且在<code>/etc/nginx/conf.d</code>中生成配置文件</p>
+<p>而cert-manager預設是acme-challenger會生成另一個ingress資源出來<br>所以你要把這個配置設定成true，目的就是希望cert-manager去更改原本的ingress<br>且不是新開另一個出來</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/03/29/cert-manager-with-kubernetes-ingress/" data-id="ck4xswhpp000cg8rtg79wpkcp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cert-manager/">cert-manager</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ingress/">ingress</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/letsencrypt/">letsencrypt</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-deploy-npm-package-with-travis" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/19/deploy-npm-package-with-travis/" class="article-date">
+  <time datetime="2019-03-19T09:14:03.000Z" itemprop="datePublished">2019-03-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/ci/">ci</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/19/deploy-npm-package-with-travis/">deploy-npm-package-with-travis</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="方法一-利用travis內置的deploy-provider"><a href="#方法一-利用travis內置的deploy-provider" class="headerlink" title="方法一: 利用travis內置的deploy provider"></a>方法一: 利用travis內置的deploy provider</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Login the travis.com</span></span><br><span class="line">travis login --com</span><br><span class="line"></span><br><span class="line"><span class="comment"># encrypt the API_KEY for travis API</span></span><br><span class="line">travis encrypt [NPM_API_KEY] --com --add <span class="string">'deploy.api_key'</span></span><br></pre></td></tr></table></figure>
+<p>這個命令會在.travis-ci.yaml中加入一個deploy的secret<br>若果是公開的repo最好把它抽出來以環境變數的形式去載入</p>
+<p>但這個如果用環境變數的話不知為何總是跑出<figure class="highlight plain"><figcaption><span>Unauthorized you must be logged in to publish packages travis```</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">搞了一輪之後決定用第二個方法</span><br><span class="line"></span><br><span class="line">## 方法二: deploy script及利用.npmrc</span><br><span class="line"></span><br><span class="line">新增一個deploy.sh</span><br><span class="line">```bash</span><br><span class="line">echo &quot;//registry.npmjs.org/:_authToken=$&#123;NPM_API_TOKEN&#125;&quot; &gt; $HOME/.npmrc</span><br><span class="line"></span><br><span class="line">npm publish</span><br></pre></td></tr></table></figure></p>
+<p>這會將環境變數寫成npmrc<br>而npm script會利用它來認證並發佈</p>
+<p>檔案如下</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="attr">node_js:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">'11'</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">'10'</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">'8'</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  if:</span> <span class="string">branch</span> <span class="string">=</span> <span class="string">master</span></span><br><span class="line"><span class="attr">cache:</span> <span class="string">npm</span></span><br><span class="line"><span class="comment"># Use script instead of npm provider as it cannot auth via env variables?</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  provider:</span> <span class="string">script</span></span><br><span class="line"><span class="attr">  script:</span> <span class="string">"./deploy.sh"</span></span><br><span class="line"><span class="attr">  skip_cleanup:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># only on tagged builds</span></span><br><span class="line"><span class="attr">  on:</span></span><br><span class="line"><span class="attr">    tags:</span> <span class="literal">true</span></span><br><span class="line"><span class="comment"># Send an email when a new version is released</span></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  email:</span></span><br><span class="line"><span class="attr">    recipients:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"$NPM_EMAIL"</span></span><br><span class="line"><span class="attr">    on_success:</span> <span class="string">change</span></span><br><span class="line"><span class="attr">    on_failure:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p>- </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/03/19/deploy-npm-package-with-travis/" data-id="ck4xswhpu000ig8rtxiyycoja" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/travis/">travis</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-grpc-in-kubernetes" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/26/grpc-in-kubernetes/" class="article-date">
+  <time datetime="2019-02-26T09:55:43.000Z" itemprop="datePublished">2019-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/26/grpc-in-kubernetes/">gRPC在kubernetes的小問題</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>事緣每隔一段時間deploy後<br>總有一部份pod在連接其他pod的gRPC時會報錯<br>發生機率極低</p>
+<p>經過一大堆的測試後卻又不能復現<br>包括各種DNS/k8s上的測試</p>
+<p>但我查看kube-proxy的log後<br>相信是跟gRPC內置的dns cache機制有關係<br>因為每次狀態發生時都跟kube-proxy的重啟有關係<br>因為未明原因導致kube-proxy重啟 &gt; 重啟後一些routing的改變 &gt;<br>某些pod的internal ip改變了 &gt; gRPC的DNS仍舊指向舊的pod ip &gt; 連不上</p>
+<p>用比較暴力的方法去解決<br>就是利用gRPC的DEADLINE機制<br>再加上設定liveness probe<br>每隔一段時間k8s會訪問你的狀態<br>若果是連續幾次都timeout的話就會把pod砍掉重啟</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> deadline = <span class="keyword">new</span> <span class="built_in">Date</span>().setSeconds(<span class="keyword">new</span> <span class="built_in">Date</span>().getSeconds() + GRPC_TIMEOUT_SECONDS);</span><br><span class="line">gRPCClient.query(query, &#123; deadline &#125;, (err, res) =&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>當然上面是一個很危險的方法<br>若果連線狀態很差可能會一直重啟<br>造成服務不穩的情況<br>更好的做法或者是利用第三方的service discovery<br>例如Istio或者linkerd等service mesh<br>或者將來有時間可以再研究一下…</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://kubernetes.io/blog/2018/11/07/grpc-load-balancing-on-kubernetes-without-tears/" target="_blank" rel="noopener">https://kubernetes.io/blog/2018/11/07/grpc-load-balancing-on-kubernetes-without-tears/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/02/26/grpc-in-kubernetes/" data-id="ck4xswhqp001rg8rteo8bsomn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dns/">dns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grpc/">grpc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-choose-k8s-node-type-wisely" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/21/choose-k8s-node-type-wisely/" class="article-date">
+  <time datetime="2019-02-21T03:39:07.000Z" itemprop="datePublished">2019-02-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/21/choose-k8s-node-type-wisely/">選擇kubenetes的node type</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>公司的集群一直都在用t2.medium<br>原因是t2系列中可累積的CPU credit非常實用<br>詳情可參看 <a href="/2018/09/19/aws-t2-medium/" title="AWS中t2.medium的二三事">AWS中t2.medium的二三事</a><br>而且medium的內存(4G)也夠跑一定數量的pod<br>比較比相當不錯</p>
+<p>但最近參考了其他人的做法<br>把node type從medium轉換成xlarge之後<br>node的數量大減之餘，價格亦有相當的減少<br>所以希望在此分享一下心得</p>
+<h2 id="為什麼t2-xlarge會比t2-medium好"><a href="#為什麼t2-xlarge會比t2-medium好" class="headerlink" title="為什麼t2.xlarge會比t2.medium好"></a>為什麼t2.xlarge會比t2.medium好</h2><p>如果單看價錢的話<br>t2.xlarge的價錢是t2.medium的4倍<br>但只有2倍於medium(4個vCPU), cpu credit也沒有去到4倍<br><img src="/images/aws-pricing.png" alt=""></p>
+<p>這樣看的話只有內存才算是真的4倍<br>那為什麼說xlarge會比medium利用率更好呢？</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/02/21/choose-k8s-node-type-wisely/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/02/21/choose-k8s-node-type-wisely/" data-id="ck4xswhpq000dg8rtigdzsbya" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-wordpress-migrate-hexo-2" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/02/wordpress-migrate-hexo-2/" class="article-date">
+  <time datetime="2019-01-02T09:35:55.000Z" itemprop="datePublished">2019-01-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dev/">dev</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/wordpress-migrate-hexo-2/">把blog由wordpress轉移到hexo(下)</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hexo小心得"><a href="#Hexo小心得" class="headerlink" title="Hexo小心得"></a>Hexo小心得</h1><h2 id="從wordpress直接導入"><a href="#從wordpress直接導入" class="headerlink" title="從wordpress直接導入"></a>從wordpress直接導入</h2><p>安裝plugin</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-migrator-wordpress</span><br></pre></td></tr></table></figure>
+<p>注意這個plugin並不會把圖片自動下載<br>我是另外寫了一個script把圖片都下載並加入到項目當中<br>好一點當然是上傳到一些永久的空間(如cloudinary之類)</p>
+<h2 id="SEO配置"><a href="#SEO配置" class="headerlink" title="SEO配置"></a>SEO配置</h2><p>加入sitemap及rss feed<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-generator-feed</span><br><span class="line">npm install --save-dev hexo-generator-sitemap</span><br></pre></td></tr></table></figure></p>
+<p>當然每個post你也應該設定一個好的slug及相關的tags</p>
+<p>##　自訂theme</p>
+<p>安裝hexo時就已經預載了一個theme於目錄<code>./themes/</code> 中<br>最簡單的方法就是直接修改<br>或者可以使用其他人所寫的theme</p>
+<h2 id="摘要excerpt"><a href="#摘要excerpt" class="headerlink" title="摘要excerpt"></a>摘要excerpt</h2><p>在文章中加入以下script會自動生成文章摘要</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Facebook留言"><a href="#Facebook留言" class="headerlink" title="Facebook留言"></a>Facebook留言</h2><p>安裝plugin</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-fbcomments</span><br></pre></td></tr></table></figure>
+<p>修改<code>_config.yaml</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Enable facebook comments</span><br><span class="line">fbcomments:</span><br><span class="line">  enabled: true</span><br><span class="line">  lang: zh_HK</span><br><span class="line">  appId: [facebook_app_id]</span><br><span class="line">  numPosts: 20</span><br></pre></td></tr></table></figure>
+<h2 id="發佈到github-pages"><a href="#發佈到github-pages" class="headerlink" title="發佈到github pages"></a>發佈到github pages</h2><p>先建立相應的github repo並新增一個orphan branch<br>可以看這裡 </p>
+<p>然後安裝plugin</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<p>更改<code>_config.yaml</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Deployment</span><br><span class="line"># Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:[username]/[reponame].git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  message:</span><br></pre></td></tr></table></figure>
+<p>利用command發佈<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo generate --deploy</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/01/02/wordpress-migrate-hexo-2/" data-id="ck4xswhrb003dg8rtet44qvzq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github-pages/">github-pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-wordpress-migrate-hexo" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/02/wordpress-migrate-hexo/" class="article-date">
+  <time datetime="2019-01-02T08:55:28.000Z" itemprop="datePublished">2019-01-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dev/">dev</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/wordpress-migrate-hexo/">把blog由wordpress轉移到hexo(上)</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近把這個blog由wordpress轉移到github pages上<br>同時亦利用了hexo來生成靜態網站<br>運行了一段時間後十分滿意<br>所以在此發表一下心得</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>Wordpress作為世界上最多人用的blog/cms系統<br>作為一個blog在功能上當然沒有任何不足<br>基本的SEO/CMS/Migrate功能已經有足夠的支持<br>但在我而言仍有部分不足之處</p>
+<ul>
+<li>缺乏版本控制</li>
+<li>完整備份不算簡單(尤其是圖片)</li>
+<li>需要數據庫</li>
+<li>容易成為攻擊的目標</li>
+</ul>
+<p>因為我經常會把東西搬來搬去<br>e.g. 由自己家的服務器 &gt; Digital Ocean &gt; GKE &gt; GCP<br>每次需要搬blog的時侯就要找個plugin 把blog的內容導出再導入<br>還要擔心圖片沒搬遷成功 (有可能export出來的blog只把圖片導出成連結)<br>而且自己架的數據庫要定期做備份等等…</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/01/02/wordpress-migrate-hexo/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2019/01/02/wordpress-migrate-hexo/" data-id="ck4xswhre003hg8rtpeymyrka" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github-pages/">github-pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker-auto-cleanup" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/13/docker-auto-cleanup/" class="article-date">
+  <time datetime="2018-12-13T04:23:35.000Z" itemprop="datePublished">2018-12-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/13/docker-auto-cleanup/">清除docker主機上的垃圾</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果你在本機上有docker build，或者你的CI有用到docker build的時侯<br>每過一段時間就會發現佔用的空間會大得很誇張<br>原因是docker build的時侯會下載各種的base image，更甚者會建立各樣的fs layer<br>而且建立了的image/fs layer是不會主動去刪掉的<br>所以就需要設立一些cronjob 去定期把沒用/舊的東西刪掉去騰出更多的空間</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/12/13/docker-auto-cleanup/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2018/12/13/docker-auto-cleanup/" data-id="ck4xswhpx000pg8rtgqufl2ae" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build/">build</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/prune/">prune</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/system/">system</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-elasticsearch-disk-full" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/02/elasticsearch-disk-full/" class="article-date">
+  <time datetime="2018-11-02T08:51:17.000Z" itemprop="datePublished">2018-11-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/devops/">devops</a>/<a class="article-category-link" href="/categories/devops/kubernetes/">kubernetes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/02/elasticsearch-disk-full/">當elasticsearch硬碟滿了</a>
+    </h1>
+  
+
+      </header>
+    
+    <hr class="article-seperator">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>不小心把dev場gRPC的debug log打開了，導致每天產生了差不多800萬條event<br>把本來就剩不了多少的空間直接塞爆了，碰巧prometheus跟logstash在同一個節點上<br>prometheus不幸地掛掉了導致連訊息也沒收到<br>過了兩三天才發覺數據沒了才發現出事</p>
+<p>最後要搞了兩天才把數據回復<br>幸運的是開始時就已經設置了一些機制去防錯<br>因此這次才沒有發展成為災難性的事件<br>就寫了以下的一些分享</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/11/02/elasticsearch-disk-full/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.nandiheath.com/2018/11/02/elasticsearch-disk-full/" data-id="ck4xswhqb001dg8rtetftwgrb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aws/">aws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elk/">elk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/filebeat/">filebeat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/k8s/">k8s</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/logstash/">logstash</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">
+    about me
+  </h3>
+  <div>
+    <ul class="list-inline">
+      <li>
+        <a target="_blank" href="https://www.facebook.com/nandi.wonghonbun">
+          <span class="fa-stack fa-lg">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fab fa-facebook-f fa-inverse fa-stack-1x"></i>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://github.com/nandiheath">
+          <span class="fa-stack fa-lg">
+            <i class="fas fa-circle fa-stack-2x"></i>
+            <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cheatsheet/">cheatsheet</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dev/">dev</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/ci/">ci</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elasticsearch/">elasticsearch</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/elk/">elk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/devops/kubernetes/">kubernetes</a><span class="category-list-count">11</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/game/">game</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/game/樂園復活計劃/">樂園復活計劃</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/personal/">personal</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/aws/" style="font-size: 16.67px;">aws</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/build/" style="font-size: 10px;">build</a> <a href="/tags/c/" style="font-size: 18.33px;">c#</a> <a href="/tags/cassandra/" style="font-size: 10px;">cassandra</a> <a href="/tags/cert-manager/" style="font-size: 10px;">cert-manager</a> <a href="/tags/ci/" style="font-size: 13.33px;">ci</a> <a href="/tags/curator/" style="font-size: 10px;">curator</a> <a href="/tags/dns/" style="font-size: 10px;">dns</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/domain/" style="font-size: 10px;">domain</a> <a href="/tags/drain/" style="font-size: 10px;">drain</a> <a href="/tags/ec2/" style="font-size: 10px;">ec2</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/elk/" style="font-size: 10px;">elk</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/filebeat/" style="font-size: 10px;">filebeat</a> <a href="/tags/game/" style="font-size: 18.33px;">game</a> <a href="/tags/git/" style="font-size: 11.67px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/github-pages/" style="font-size: 13.33px;">github-pages</a> <a href="/tags/gitlab/" style="font-size: 11.67px;">gitlab</a> <a href="/tags/grafana/" style="font-size: 10px;">grafana</a> <a href="/tags/grpc/" style="font-size: 10px;">grpc</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/ingress/" style="font-size: 11.67px;">ingress</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/key/" style="font-size: 10px;">key</a> <a href="/tags/kubectl/" style="font-size: 10px;">kubectl</a> <a href="/tags/kubenetes/" style="font-size: 11.67px;">kubenetes</a> <a href="/tags/kubernetes/" style="font-size: 20px;">kubernetes</a> <a href="/tags/label/" style="font-size: 10px;">label</a> <a href="/tags/letsencrypt/" style="font-size: 10px;">letsencrypt</a> <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logstash/" style="font-size: 10px;">logstash</a> <a href="/tags/nginx/" style="font-size: 13.33px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 11.67px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/phantomjs/" style="font-size: 10px;">phantomjs</a> <a href="/tags/prometheus/" style="font-size: 13.33px;">prometheus</a> <a href="/tags/proxy-protocol/" style="font-size: 10px;">proxy-protocol</a> <a href="/tags/prune/" style="font-size: 10px;">prune</a> <a href="/tags/reverse-proxy/" style="font-size: 10px;">reverse proxy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/shard/" style="font-size: 10px;">shard</a> <a href="/tags/software-engineering/" style="font-size: 10px;">software-engineering</a> <a href="/tags/sourceip/" style="font-size: 10px;">sourceip</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/submodules/" style="font-size: 10px;">submodules</a> <a href="/tags/system/" style="font-size: 10px;">system</a> <a href="/tags/t2-medium/" style="font-size: 11.67px;">t2.medium</a> <a href="/tags/taint/" style="font-size: 11.67px;">taint</a> <a href="/tags/test-automation/" style="font-size: 10px;">test-automation</a> <a href="/tags/travis/" style="font-size: 10px;">travis</a> <a href="/tags/travisci/" style="font-size: 10px;">travisci</a> <a href="/tags/unity/" style="font-size: 18.33px;">unity</a> <a href="/tags/wordpress/" style="font-size: 11.67px;">wordpress</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Nandi Wong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首頁</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/cheatsheets" class="mobile-nav-link">Cheatsheets</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
